@@ -14,5 +14,8 @@
 # default input                                                               #
 #=============================================================================#
 
-# if true, will print extra detail to terminal. useful for debuging or seeing what is happening under the hood
-verbose = False
+defaults = {
+    # if true, will print extra detail to terminal. useful for debuging or seeing what is happening under the hood
+    '__verbose__': False,
+    '__tab_pad__': 4,
+}
