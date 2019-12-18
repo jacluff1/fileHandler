@@ -100,8 +100,14 @@ class util:
         else:
             for line in lines: print(line)
 
-    def saveme(self):
-        NotImplemented
+    def saveme(self, filename, obj, **kwargs):
+        # extract name and extension from filename
+        name, ext = os.path.splitext(filename)
+        # construct alias for desired save method
+        func = f"self__saveme__{ext[1:]}__"
+        # return the loaded object
+        obj = func(filename, obj)
+        return obj
 
     def writeme(self):
         NotImplemented
@@ -192,6 +198,33 @@ class util:
 
     def __printme__tabSpace__(self, tabs):
         return "".join([" " for _ in range(tabs*self.__tab_pad__)])
+
+    def __saveme__csv__(self, filename, obj, **kwargs):
+        # make sure obj is a DataFrame
+        self.__saveme__assert_message__(filename, obj, pd.core.frame.DataFrame)
+        # treat default 'index' option in DataFrame.to_csv method as False instead of True
+        options = {'index' = False}
+        options.update(kwargs)
+        # save obj as csv
+        obj.to_csv(filename, **options)
+
+    @staticmethod
+    def __saveme__assert_message__(filename, obj, instance):
+        assert isinstance(obj, instance), f"you entered a filename, {filename}, with an object of type {type(obj)}; which is invalid."
+
+    def __saveme__npy__(self, filename, obj, **kwargs):
+        self.__saveme__assert_message__(filename, obj, np.ndarray)
+        np.save(filename, obj)
+
+    def __saveme__pkl__(self, filename, obj, **kwargs):
+        self.__saveme__assert_message__(filename, obj, dict)
+        with open(filename, 'wb') as f:
+            pickle.dump(obj, f)
+
+    def __saveme__txt__(self, filename, obj, **kwargs):
+        self.__saveme__assert_message__(filename, obj, list)
+        with open(filename, 'w') as f:
+            f.writelines(obj)
 
 #=============================================================================#
 # run-time options                                                            #
