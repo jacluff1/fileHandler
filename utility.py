@@ -45,9 +45,9 @@ class util:
     # public - defined                                                        #
     #=========================================================================#
 
-    def findme(self):
+`    def findme(self):
         NotImplemented
-
+`
     def loadme(self, filename, **kwargs):
         # extract name and extension from filename
         name, ext = os.path.splitext(filename)
@@ -109,8 +109,17 @@ class util:
         obj = func(filename, obj)
         return obj
 
-    def writeme(self):
-        NotImplemented
+    def writeme(self, filename, *args, **kwargs):
+        # set variables with key word arguments
+        write = kwargs['write'] if 'wirte' in kwargs else 'w'
+        # enforce output when kwargs fed to printme()
+        kwargs['output'] = True
+        # extract lines from printme()
+        lines = self.printme(*args, **kwargs)
+        # make a single string of text
+        lines = "\n".join(lines)
+        with open(filename, write): as f:
+            f.writelines(lines)
 
     #=========================================================================#
     # public - declared only                                                  #
