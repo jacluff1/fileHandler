@@ -60,5 +60,8 @@ util.printme(
         3,
         4
 ```
-
+* saveme(self, filename, obj, **kwargs)  
+the corollary to loadme
+* writeme(self, filename, *args, **kwargs)  
+gets a list of lines to write using lines = util.printme(*args, output=True, **kwargs), then writes the lines to the filename.
 2. basic: repackages a dictionary as a class
