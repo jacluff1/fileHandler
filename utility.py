@@ -2,6 +2,7 @@
 # import from external libraries                                              #
 #=============================================================================#
 
+import argparse
 import numpy as np
 import pandas as pd
 import pickle
@@ -25,7 +26,7 @@ from config import defaults
 #=============================================================================#
 
 class basic:
-    def __init__(self, state):
+    def __init__(self):
         self.__dict__.update(state)
 
 class util:
@@ -45,9 +46,9 @@ class util:
     # public - defined                                                        #
     #=========================================================================#
 
-`    def findme(self):
+    def findme(self):
         NotImplemented
-`
+
     def loadme(self, filename, **kwargs):
         # extract name and extension from filename
         name, ext = os.path.splitext(filename)
@@ -164,6 +165,7 @@ class util:
     def __loadme__txt__(filename, **kwargs):
         with open(filename, 'r') as f:
             obj = f.readlines()
+        obj = [x.rstrip('\n') for x in obj]
         return obj
 
     def __printme__controller__(self, x, tabs):
@@ -236,12 +238,3 @@ class util:
             f.writelines(obj)
 
 #=============================================================================#
-# run-time options                                                            #
-#=============================================================================#
-
-#=============================================================================#
-# run-time                                                                    #
-#=============================================================================#
-
-if __name__ == '__main__':
-    NotImplemented
